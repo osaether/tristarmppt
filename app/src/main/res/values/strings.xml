@@ -1,0 +1,42 @@
+<resources>
+    <string name="charging_durations">Charging Durations:</string>
+    <string name="time_equalize_daily">Equalize</string>
+    <string name="time_float_daily">Float</string>
+    <string name="time_absorp_daily">Absorption</string>
+    <string name="battery_voltage">Battery Voltage</string>
+    <string name="target_voltage">Target Voltage</string>
+    <string name="max_battery_voltage_daily">Max. Battery Voltage</string>
+    <string name="min_battery_voltage_daily">Min. Battery Voltage</string>
+    <string name="max_output_power_daily">Max. Output Power</string>
+    <string name="max_array_voltage_daily">Max. Array Voltage</string>
+    <string name="max_battery_temp_daily">Max. Battery Temp (daily)</string>
+    <string name="min_battery_temp_daily">Min. Battery Temp (daily)</string>
+    <string name="charge_current">Charge Current</string>
+    <string name="charge_state">Charge State</string>
+    <string name="output_power">Output Power</string>
+    <string name="array_voltage">Array Voltage</string>
+    <string name="array_current">Array Current</string>
+    <string name="sweep_vmp">Sweep Vmp</string>
+    <string name="sweep_voc">Sweep Voc</string>
+    <string name="sweep_pmax">Sweep Pmax</string>
+    <string name="temp_bat">Battery</string>
+    <string name="temp_hsink">Heat Sink</string>
+    <string name="amp_hours_tot">Amp Hours (total)</string>
+    <string name="amp_hours_res">Amp Hours (resettable)</string>
+    <string name="amp_hours_daily">Amp Hours (daily)</string>
+    <string name="kwatt_hours_tot">Kilowatt Hours (total)</string>
+    <string name="kwatt_hours_res">Kilowatt Hours (resettable)</string>
+    <string name="watt_hours_daily">Watt Hours (daily)</string>
+
+    <string name="title_activity_settings">Settings</string>
+    <string name="pref_header_general">General</string>
+    <string name="pref_ip_address">IP Address</string>
+    <string name="pref_default_ip_address">127.0.0.1</string>
+    <string name="pref_port">Port</string>
+    <string name="pref_default_port">502</string>
+
+    <string name="menu_string_settings">Settings</string>
+    <string name="menu_string_refresh">Refresh</string>
+
+    <string name="app_name">Tristar MPPT v1.51</string>
+</resources>

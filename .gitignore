@@ -1,0 +1,8 @@
+.gradle
+local.properties
+.idea/workspace.xml
+.idea/libraries
+build
+*.apk
+app/src/main/java/com/serotonin/
+app/libs
