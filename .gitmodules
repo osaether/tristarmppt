@@ -1,0 +1,3 @@
+[submodule "ext/modbus4j-nologging"]
+	path = ext/modbus4j-nologging
+	url = https://github.com/osaether/modbus4j-nologging.git

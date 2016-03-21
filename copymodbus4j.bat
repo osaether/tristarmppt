@@ -1,0 +1,1 @@
+@xcopy /s /y ext\modbus4j-nologging\Modbus4J\src\com\serotonin\*.* app\src\main\java\com\serotonin\
