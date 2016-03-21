@@ -93,6 +93,7 @@ public class MainActivity extends FragmentActivity {
         private Exception exception;
         private String m_host;
         private int m_port;
+        private int m_slave_id;
 
         private TristarData m_tristarData = new TristarData();
 
@@ -102,9 +103,7 @@ public class MainActivity extends FragmentActivity {
 
         private short[] read_signed_short_input_registers(TcpMaster tcpMaster, int address, int len) throws ModbusTransportException {
             try {
-                //SlaveAndRange slaveAndRange = new SlaveAndRange(1, RegisterRange.INPUT_REGISTER);
-                //ModbusLocator locator = new ModbusLocator(slaveAndRange, address, DataType.TWO_BYTE_INT_SIGNED);
-                NumericLocator locator = new NumericLocator(1, RegisterRange.INPUT_REGISTER, address, DataType.TWO_BYTE_INT_SIGNED);
+                NumericLocator locator = new NumericLocator(m_slave_id, RegisterRange.INPUT_REGISTER, address, DataType.TWO_BYTE_INT_SIGNED);
                 ModbusRequest request;
                 ReadResponse response;
                 request = new ReadInputRegistersRequest(locator.getSlaveId(), locator.getOffset(), len);
@@ -124,10 +123,13 @@ public class MainActivity extends FragmentActivity {
 
             String defHost = m_context.getString(R.string.pref_default_ip_address);
             String defPort = m_context.getString(R.string.pref_default_port);
+            String defSlaveId = m_context.getString(R.string.pref_default_slave_id);
 
             this.m_host = sharedPrefs.getString("ip_address", defHost);
             String port = sharedPrefs.getString("ip_port", defPort);
             this.m_port = Integer.parseInt(port, 10);
+            String slave_id = sharedPrefs.getString("slave_id", defSlaveId);
+            this.m_slave_id = Integer.parseInt(slave_id, 10);
         }
 
         protected TristarData doInBackground(Void... dummy) {

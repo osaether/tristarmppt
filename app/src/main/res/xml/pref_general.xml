@@ -18,4 +18,13 @@
         android:singleLine="true"
         android:maxLines="1" />
 
+    <EditTextPreference
+        android:key="slave_id"
+        android:title="@string/pref_slave_id"
+        android:defaultValue="@string/pref_default_slave_id"
+        android:selectAllOnFocus="true"
+        android:inputType="number"
+        android:singleLine="true"
+        android:maxLines="1" />
+
 </PreferenceScreen>
