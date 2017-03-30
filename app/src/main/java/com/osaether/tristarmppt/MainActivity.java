@@ -2,39 +2,22 @@ package com.osaether.tristarmppt;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.content.res.Configuration;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.content.Intent;
-//import android.preference.PreferenceManager;
 import android.preference.PreferenceManager;
-import android.support.v4.app.Fragment;
-import com.osaether.tristarmppt.TristarMPPTFragment;
-//import com.serotonin.modbus4j.ModbusLocator;
-import com.serotonin.modbus4j.exception.ErrorResponseException;
-import com.serotonin.modbus4j.locator.NumericLocator;
-import com.serotonin.modbus4j.base.SlaveAndRange;
-import com.serotonin.modbus4j.code.DataType;
-import com.serotonin.modbus4j.code.RegisterRange;
-import com.serotonin.modbus4j.exception.ModbusInitException;
-import com.serotonin.modbus4j.exception.ModbusTransportException;
-import com.serotonin.modbus4j.ip.IpParameters;
-import com.serotonin.modbus4j.ip.tcp.TcpMaster;
-import com.serotonin.modbus4j.msg.ModbusRequest;
-import com.serotonin.modbus4j.msg.ReadInputRegistersRequest;
-import com.serotonin.modbus4j.msg.ReadResponse;
-
+import com.osaether.modbus.ModbusTCP;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.TextView;
-import android.support.v4.view.ViewPager;
 import android.widget.Toast;
 
 
 public class MainActivity extends FragmentActivity {
+    public static final int TSMPPTPORT = 502;
+    public static final String TSMPPTIP = "bergstua.dyndns.org";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,23 +85,6 @@ public class MainActivity extends FragmentActivity {
             this.m_context = context.getApplicationContext();
         }
 
-        private short[] read_signed_short_input_registers(TcpMaster tcpMaster, int address, int len) throws ModbusTransportException {
-            try {
-                NumericLocator locator = new NumericLocator(m_slave_id, RegisterRange.INPUT_REGISTER, address, DataType.TWO_BYTE_INT_SIGNED);
-                ModbusRequest request;
-                ReadResponse response;
-                request = new ReadInputRegistersRequest(locator.getSlaveId(), locator.getOffset(), len);
-                response = (ReadResponse) tcpMaster.send(request);
-                short[] data = new short[len];
-                //Object[] values = new Object[2];
-                data = response.getShortData();
-                return data;
-            }
-            catch (ModbusTransportException e ) {
-                throw e;
-            }
-        }
-
         private void ReadSettings() {
             SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(m_context);
 
@@ -138,13 +104,12 @@ public class MainActivity extends FragmentActivity {
             try {
                 ReadSettings();
                 m_tristarData.m_berror = false;
-                IpParameters ipParameters = new IpParameters();
-                ipParameters.setHost(m_host);
-                ipParameters.setPort(m_port);
-                TcpMaster tcpMaster = new TcpMaster(ipParameters, true);
-                tcpMaster.setTimeout(5000);
-                tcpMaster.init();
-                short[] tsdata = read_signed_short_input_registers(tcpMaster, 0, 80);
+
+                ModbusTCP modbus = new ModbusTCP(TSMPPTIP, TSMPPTPORT);
+                modbus.connect();
+                short[] tsdata = modbus.readInputRegisters(0, 80);
+                modbus.close();
+
                 m_tristarData.m_v_pu = (float)tsdata[0];
                 m_tristarData.m_i_pu = (float)tsdata[2];
                 m_tristarData.m_vbat = m_tristarData.m_v_pu * (float)tsdata[24] / 32768.0f;
@@ -203,18 +168,6 @@ public class MainActivity extends FragmentActivity {
                 m_tristarData.m_timefloat = tsdata[79];
                 m_tristarData.m_timeabsorption = tsdata[77];
 
-                return m_tristarData;
-            }
-            catch (ModbusTransportException e ) {
-                Log.e(getClass().getSimpleName(), e.toString());
-                m_tristarData.m_berror = true;
-                m_tristarData.error = e.toString();
-                return m_tristarData;
-            }
-            catch (ModbusInitException e) {
-                Log.e(getClass().getSimpleName(), e.toString());
-                m_tristarData.m_berror = true;
-                m_tristarData.error = e.toString();
                 return m_tristarData;
             }
             catch (Exception e) {
