@@ -152,19 +152,47 @@ public class TristarMPPTFragment extends Fragment {
                 case 2:
                     txtBox = (TextView) mViewPager.findViewById(R.id.tbat);
                     if (txtBox != null) {
-                        txtBox.setText(String.format("%d ºC", m_tristarData.m_tbat));
+                        if (m_tristarData.m_fahrenheit)
+                        {
+                            txtBox.setText(String.format("%d ºF", m_tristarData.m_tbat));
+                        }
+                        else
+                        {
+                            txtBox.setText(String.format("%d ºC", m_tristarData.m_tbat));
+                        }
                     }
                     txtBox = (TextView) mViewPager.findViewById(R.id.thsink);
                     if (txtBox != null) {
-                        txtBox.setText(String.format("%d ºC", m_tristarData.m_thsink));
+                        if (m_tristarData.m_fahrenheit)
+                        {
+                            txtBox.setText(String.format("%d ºF", m_tristarData.m_thsink));
+                        }
+                        else
+                        {
+                            txtBox.setText(String.format("%d ºC", m_tristarData.m_thsink));
+                        }
                     }
                     txtBox = (TextView) mViewPager.findViewById(R.id.tbatmaxdaily);
                     if (txtBox != null) {
-                        txtBox.setText(String.format("%d ºC", m_tristarData.m_tbatmax));
+                        if (m_tristarData.m_fahrenheit)
+                        {
+                            txtBox.setText(String.format("%d ºF", m_tristarData.m_tbatmax));
+                        }
+                        else
+                        {
+                            txtBox.setText(String.format("%d ºC", m_tristarData.m_tbatmax));
+                        }
                     }
                     txtBox = (TextView) mViewPager.findViewById(R.id.tbatmindaily);
                     if (txtBox != null) {
-                        txtBox.setText(String.format("%d ºC", m_tristarData.m_tbatmin));
+                        if (m_tristarData.m_fahrenheit)
+                        {
+                            txtBox.setText(String.format("%d ºF", m_tristarData.m_tbatmin));
+                        }
+                        else
+                        {
+                            txtBox.setText(String.format("%d ºC", m_tristarData.m_tbatmin));
+                        }
                     }
                     break;
                 case 3:

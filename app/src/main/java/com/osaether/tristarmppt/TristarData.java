@@ -35,4 +35,5 @@ public class TristarData {
     public short m_timeabsorption;
     public boolean m_berror;
     public String error;
+    public boolean m_fahrenheit;
 }

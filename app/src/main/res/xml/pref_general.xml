@@ -27,4 +27,15 @@
         android:singleLine="true"
         android:maxLines="1" />
 
+    <SwitchPreference
+        android:title="Temperature units"
+        android:defaultValue="true"
+        android:key="use_celsius"
+        android:summaryOn="Celsius"
+        android:summaryOff="Fahrenheit"
+        android:switchTextOn="C"
+        android:switchTextOff="F"
+        android:showText="true"
+        />
+
 </PreferenceScreen>

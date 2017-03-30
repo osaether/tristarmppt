@@ -40,6 +40,7 @@ public class MainActivity extends FragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        String version = BuildConfig.VERSION_NAME;
         if (savedInstanceState == null) {
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
             TristarMPPTFragment fragment = new TristarMPPTFragment();
@@ -130,6 +131,7 @@ public class MainActivity extends FragmentActivity {
             this.m_port = Integer.parseInt(port, 10);
             String slave_id = sharedPrefs.getString("slave_id", defSlaveId);
             this.m_slave_id = Integer.parseInt(slave_id, 10);
+            this.m_tristarData.m_fahrenheit = !sharedPrefs.getBoolean("use_celsius", true);;
         }
 
         protected TristarData doInBackground(Void... dummy) {
@@ -189,6 +191,13 @@ public class MainActivity extends FragmentActivity {
                 m_tristarData.m_tbat = tsdata[37];
                 m_tristarData.m_tbatmin = tsdata[71];
                 m_tristarData.m_tbatmax = tsdata[72];
+                if (m_tristarData.m_fahrenheit)
+                {
+                    m_tristarData.m_thsink = (short)((double)m_tristarData.m_thsink * 9.0/5.0 + 32.0);
+                    m_tristarData.m_tbat = (short)((double)m_tristarData.m_tbat * 9.0/5.0 + 32.0);
+                    m_tristarData.m_tbatmin = (short)((double)m_tristarData.m_tbatmin * 9.0/5.0 + 32.0);
+                    m_tristarData.m_tbatmax = (short)((double)m_tristarData.m_tbatmax * 9.0/5.0 + 32.0);
+                }
 
                 m_tristarData.m_timeequalize = tsdata[78];
                 m_tristarData.m_timefloat = tsdata[79];
