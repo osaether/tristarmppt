@@ -1,5 +1,6 @@
 package com.osaether.tristarmppt;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
@@ -43,6 +44,12 @@ public class MainActivity extends FragmentActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+            case R.id.menu_about:
+                Dialog about = new Dialog(this);
+                about.setContentView(R.layout.about);
+                about.setTitle(R.string.about_title);
+                about.show();
+                break;
             case R.id.menu_show_settings:
                 Intent i = new Intent(this, SettingsActivity.class);
                 startActivityForResult(i, 0);
