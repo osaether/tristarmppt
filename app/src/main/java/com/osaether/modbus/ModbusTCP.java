@@ -88,15 +88,11 @@ public class ModbusTCP {
 
     private short[] convertBytestoShort(byte[] inp, int len) {
         short[] outp = new short[len];
-        //ByteBuffer buf = ByteBuffer.allocate(len);
-        //buf.put(inp, idx, len);
-        // byte[] tmp = Arrays.copyOfRange(inp, idx, idx+len);
+
         ByteBuffer buf = ByteBuffer.wrap(inp);
-        //buf.order(ByteOrder.LITTLE_ENDIAN);
         for (int i=0;i<len;i++)
         {
             outp[i] = buf.getShort(2*i);
-            //outp[i] = (short)(inp[idx+2*i]*256 + inp[idx+2*i+1]);
         }
         return outp;
     }
