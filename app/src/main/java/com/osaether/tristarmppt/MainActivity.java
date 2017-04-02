@@ -64,21 +64,6 @@ public class MainActivity extends FragmentActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    //@Override
-    // TODO: Handle configuration change here. Make sure already read
-    // data is displayed.
-    //public void onConfigurationChanged(Configuration newConfig) {
-    //if(newConfig.orientation==Configuration.ORIENTATION_LANDSCAPE)
-    //{
-    //    //change of background
-    //}
-    //else if(newConfig.orientation==Configuration.ORIENTATION_PORTRAIT)
-    //{
-    //    //change the background
-    //}
-    //    super.onConfigurationChanged(newConfig);
-    //}
-
     class ModbusAccess extends AsyncTask<Void, Void, TristarData> {
         private Context m_context;
         private Exception exception;
