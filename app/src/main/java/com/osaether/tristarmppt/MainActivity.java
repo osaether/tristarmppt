@@ -17,9 +17,7 @@ import android.widget.Toast;
 
 
 public class MainActivity extends FragmentActivity {
-    public static final int TSMPPTPORT = 502;
-    public static final String TSMPPTIP = "bergstua.dyndns.org";
-
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -97,7 +95,7 @@ public class MainActivity extends FragmentActivity {
                 ReadSettings();
                 m_tristarData.m_berror = false;
 
-                ModbusTCP modbus = new ModbusTCP(TSMPPTIP, TSMPPTPORT);
+                ModbusTCP modbus = new ModbusTCP(this.m_host, this.m_port);
                 modbus.connect();
                 short[] tsdata = modbus.readInputRegisters(0, 80);
                 modbus.close();
