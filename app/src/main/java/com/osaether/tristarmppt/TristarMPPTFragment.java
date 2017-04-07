@@ -234,7 +234,13 @@ public class TristarMPPTFragment extends Fragment {
                     if (txtBox != null) {
                         txtBox.setText(String.format("%.2f V", m_tristarData.m_pvvmaxdaily));
                     }
-
+                    txtBox = (TextView) mViewPager.findViewById(R.id.hourmeter);
+                    if (txtBox != null) {
+                        long y = m_tristarData.m_hours/(24*365);
+                        long d = (m_tristarData.m_hours - y*(24*365))/24;
+                        long h = m_tristarData.m_hours - y*365*24 - d*24;
+                        txtBox.setText(String.format("%dy%dd%dh", (int)y, (int)d, (int)h));
+                    }
                     txtBox = (TextView) mViewPager.findViewById(R.id.timeeqdaily);
                     if (txtBox != null) {
                         txtBox.setText(String.format("%d min", m_tristarData.m_timeequalize/60));

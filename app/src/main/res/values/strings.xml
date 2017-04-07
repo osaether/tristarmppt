@@ -27,6 +27,7 @@
     <string name="kwatt_hours_tot">Kilowatt Hours (total)</string>
     <string name="kwatt_hours_res">Kilowatt Hours (resettable)</string>
     <string name="watt_hours_daily">Watt Hours (daily)</string>
+    <string name="hour_meter">Hour Meter</string>
 
     <string name="title_activity_settings">Settings</string>
     <string name="pref_header_general">General</string>

@@ -17,7 +17,7 @@ import android.widget.Toast;
 
 
 public class MainActivity extends FragmentActivity {
-    
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -117,6 +117,7 @@ public class MainActivity extends FragmentActivity {
                 // m_tristarData.m_pmaxdaily = (float)temp/10.0f;
                 m_tristarData.m_vmin = m_tristarData.m_v_pu * (float)tsdata[64] / 32768.0f;
                 m_tristarData.m_vmax = m_tristarData.m_v_pu * (float)tsdata[65] / 32768.0f;
+                m_tristarData.m_hours = (long)tsdata[42] << 16 | (long)tsdata[43];
 
                 // Counters:
                 long temph = (long)tsdata[52];

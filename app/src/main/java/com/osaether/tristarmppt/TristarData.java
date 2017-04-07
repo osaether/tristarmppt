@@ -20,6 +20,7 @@ public class TristarData {
     public float m_pvvmaxdaily;
     public float m_vmax;
     public float m_vmin;
+    public long m_hours;
     public float m_ahres;
     public float m_kwhres;
     public float m_ahtot;

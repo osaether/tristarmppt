@@ -180,6 +180,26 @@
             <TextView
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:text="@string/hour_meter"
+                android:id="@+id/textView19"
+                android:textSize="20sp"/>
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:id="@+id/hourmeter"
+                android:textSize="20sp"
+                android:layout_gravity="right"/>
+        </TableRow>
+
+        <TableRow
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent">
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
                 android:text="@string/charging_durations"
                 android:id="@+id/textView18"
                 android:textSize="20sp"/>
