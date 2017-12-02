@@ -2,15 +2,13 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 22
-    buildToolsVersion '25.0.0'
-    //compileOptions.encoding = 'ISO-8859-1'
-    
+
     defaultConfig {
         applicationId "com.osaether.tristarmppt"
         minSdkVersion 15
         targetSdkVersion 22
-        versionCode 5
-        versionName "1.54"
+        versionCode 6
+        versionName "1.55"
     }
     buildTypes {
         release {

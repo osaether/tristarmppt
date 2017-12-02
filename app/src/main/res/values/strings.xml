@@ -42,7 +42,7 @@
     <string name="menu_string_refresh">Refresh</string>
     <string name="menu_string_about">About</string>
 
-    <string name="app_name">Tristar MPPT v1.54</string>
+    <string name="app_name">Tristar MPPT v1.55</string>
     <string name="about_title">About Tristar MPPT</string>
     <string name="email">osaether@gmail.com</string>
 </resources>
