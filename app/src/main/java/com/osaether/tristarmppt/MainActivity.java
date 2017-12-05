@@ -54,7 +54,6 @@ public class MainActivity extends FragmentActivity {
                 break;
             case R.id.menu_refresh:
                 ModbusAccess ma = new ModbusAccess(this.getApplicationContext());
-                String dummy = new String("");
                 ma.execute();
                 break;
         }
@@ -114,7 +113,7 @@ public class MainActivity extends FragmentActivity {
                 m_tristarData.m_pvvmaxdaily = m_tristarData.m_v_pu * (float)tsdata[66] / 32768.0f;
                 m_tristarData.m_spmax = m_tristarData.m_i_pu *m_tristarData.m_v_pu * (float)tsdata[60] / 131072.0f;
                 m_tristarData.m_pmaxdaily = m_tristarData.m_i_pu *m_tristarData.m_v_pu * (float)tsdata[70] / 131072.0f;
-                // m_tristarData.m_pmaxdaily = (float)temp/10.0f;
+                // m_tristarData.m_pmaxdaily = (float)temp/10.0f; // MSView uses this formula
                 m_tristarData.m_vmin = m_tristarData.m_v_pu * (float)tsdata[64] / 32768.0f;
                 m_tristarData.m_vmax = m_tristarData.m_v_pu * (float)tsdata[65] / 32768.0f;
                 m_tristarData.m_hours = (long)tsdata[42] << 16 | (long)tsdata[43];
@@ -139,10 +138,6 @@ public class MainActivity extends FragmentActivity {
                 m_tristarData.m_kwhtot = (float)tsdata[57];
                 m_tristarData.m_whdaily = (float)tsdata[68];
                 // Temperatures
-//                m_tristarData.m_thsink = read_signed_short_input_register(tcpMaster, 35);
-//                m_tristarData.m_tbat = read_signed_short_input_register(tcpMaster, 37);
-//                m_tristarData.m_tbatmin = read_signed_short_input_register(tcpMaster, 71);
-//                m_tristarData.m_tbatmax = read_signed_short_input_register(tcpMaster, 72);
                 m_tristarData.m_thsink = tsdata[35];
                 m_tristarData.m_tbat = tsdata[37];
                 m_tristarData.m_tbatmin = tsdata[71];

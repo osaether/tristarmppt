@@ -1,14 +1,13 @@
 package com.osaether.modbus;
 
+import android.support.annotation.NonNull;
+
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.nio.ByteBuffer;
-
-/**
- * Created by Ole on 30.03.2017.
- */
 
 public class ModbusTCP {
     private String host_;
@@ -16,18 +15,24 @@ public class ModbusTCP {
     private byte slaveID_ = 1;
     private int timeout_ = 5000;
     private int trxID_ = 0;
+    private int read_coils = 0x01;
+    private int read_discrete_inputs = 0x02;
+    private int read_holding_registers = 0x03;
+    private int read_input_registers = 0x04;
+    private int write_single_coil = 0x05;
+    private int write_single_register = 0x06;
     private Socket socket_ = new Socket();
 
-    public ModbusTCP(String host) {
+    public ModbusTCP(@NonNull String host) {
         host_ = host;
     }
 
-    public ModbusTCP(String host, int port) {
+    public ModbusTCP(@NonNull String host, int port) {
         host_ = host;
         port_ = port;
     }
 
-    public ModbusTCP(String host, int port, byte slaveID) {
+    public ModbusTCP(@NonNull String host, int port, byte slaveID) {
         host_ = host;
         port_ = port;
         slaveID_ = slaveID;
@@ -54,30 +59,40 @@ public class ModbusTCP {
         byte[] header = new byte[9];
         byte[] resp = new byte[len*2];
 
-        byte[] cmd = createModbusCommand(addr, len);
+        byte[] cmd = createModbusCommand(addr, len, read_input_registers);
         DataOutputStream out = new DataOutputStream(socket_.getOutputStream());
         DataInputStream in = new DataInputStream(socket_.getInputStream());
 
         out.write(cmd);
         int n = in.read(header, 0, 9);
+        if (n != 9)
+        {
+            throw new IOException("Modbus header not received correctly");
+        }
         n = in.read(resp, 0, len*2);
-        short[] tsdata = convertBytestoShort(resp, len);
+        if (n != len*2)
+        {
+            throw new IOException("Modbus response not received correctly");
+        }
+        short[] data = convertBytestoShort(resp, len);
 
         trxID_ = (trxID_ + 1) & 0xffff;
-        return tsdata;
+        return data;
     }
 
-    private byte[] createModbusCommand(int addr, int len) {
+    private byte[] createModbusCommand(int addr, int len, int opcode) {
         byte[] cmd = new byte[12];
 
         cmd[0] = (byte)((trxID_ >> 8) & 0xff);
         cmd[1] = (byte)(trxID_ & 0xff);
+        // Protocol identifier (always 0):
         cmd[2] = 0;
         cmd[3] = 0;
+        // Two byte message length
         cmd[4] = 0;
-        cmd[5] = 6; // Message length that follow
+        cmd[5] = 6;
         cmd[6] = slaveID_;
-        cmd[7] = 4; // Read input register
+        cmd[7] = (byte)opcode;
         cmd[8] = (byte)((addr >> 8) & 0xff);
         cmd[9] = (byte)(addr & 0xff);
         cmd[10] = (byte)((len >> 8) & 0xff);
