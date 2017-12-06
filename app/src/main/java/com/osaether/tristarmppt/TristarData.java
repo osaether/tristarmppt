@@ -1,40 +1,37 @@
 package com.osaether.tristarmppt;
 
-/**
- * Created by Ole on 22.04.2015.
- */
-public class TristarData {
-    public float m_v_pu;
-    public float m_i_pu;
-    public float m_vbat;
-    public float m_vtarget;
-    public float m_icharge;
-    public short m_chargestate;
-    public float m_pout;
-    public float m_varray;
-    public float m_iarray;
-    public float m_voc;
-    public float m_vmp;
-    public float m_spmax;
-    public float m_pmaxdaily;
-    public float m_pvvmaxdaily;
-    public float m_vmax;
-    public float m_vmin;
-    public long m_hours;
-    public float m_ahres;
-    public float m_kwhres;
-    public float m_ahtot;
-    public float m_kwhtot;
-    public float m_ahdaily;
-    public float m_whdaily;
-    public short m_thsink;
-    public short m_tbat;
-    public short m_tbatmax;
-    public short m_tbatmin;
-    public short m_timeequalize;
-    public short m_timefloat;
-    public short m_timeabsorption;
-    public boolean m_berror;
-    public String error;
-    public boolean m_fahrenheit;
+class TristarData {
+    float m_v_pu;
+    float m_i_pu;
+    float m_vbat;
+    float m_vtarget;
+    float m_icharge;
+    short m_chargestate;
+    float m_pout;
+    float m_varray;
+    float m_iarray;
+    float m_voc;
+    float m_vmp;
+    float m_spmax;
+    float m_pmaxdaily;
+    float m_pvvmaxdaily;
+    float m_vmax;
+    float m_vmin;
+    long m_hours;
+    float m_ahres;
+    float m_kwhres;
+    float m_ahtot;
+    float m_kwhtot;
+    float m_ahdaily;
+    float m_whdaily;
+    short m_thsink;
+    short m_tbat;
+    short m_tbatmax;
+    short m_tbatmin;
+    short m_timeequalize;
+    short m_timefloat;
+    short m_timeabsorption;
+    boolean m_berror;
+    String error;
+    boolean m_fahrenheit;
 }

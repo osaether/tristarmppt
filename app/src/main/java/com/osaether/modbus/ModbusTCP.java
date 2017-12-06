@@ -12,7 +12,7 @@ import java.nio.ByteBuffer;
 public class ModbusTCP {
     private String host_;
     private int port_ = 502;
-    private byte slaveID_ = 1;
+    private int slaveID_ = 1;
     private int timeout_ = 5000;
     private int trxID_ = 0;
     private int read_coils = 0x01;
@@ -32,7 +32,7 @@ public class ModbusTCP {
         port_ = port;
     }
 
-    public ModbusTCP(@NonNull String host, int port, byte slaveID) {
+    public ModbusTCP(@NonNull String host, int port, int slaveID) {
         host_ = host;
         port_ = port;
         slaveID_ = slaveID;
@@ -42,7 +42,7 @@ public class ModbusTCP {
         port_ = port;
     }
 
-    public void setSlaveID(byte slaveID) {
+    public void setSlaveID(int slaveID) {
         slaveID_ = slaveID;
     }
 
@@ -91,7 +91,7 @@ public class ModbusTCP {
         // Two byte message length
         cmd[4] = 0;
         cmd[5] = 6;
-        cmd[6] = slaveID_;
+        cmd[6] = (byte)slaveID_;
         cmd[7] = (byte)opcode;
         cmd[8] = (byte)((addr >> 8) & 0xff);
         cmd[9] = (byte)(addr & 0xff);

@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
+import java.lang.ref.WeakReference;
 
 
 public class MainActivity extends FragmentActivity {
@@ -22,7 +23,6 @@ public class MainActivity extends FragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        String version = BuildConfig.VERSION_NAME;
         if (savedInstanceState == null) {
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
             TristarMPPTFragment fragment = new TristarMPPTFragment();
@@ -53,48 +53,52 @@ public class MainActivity extends FragmentActivity {
                 startActivityForResult(i, 0);
                 break;
             case R.id.menu_refresh:
-                ModbusAccess ma = new ModbusAccess(this.getApplicationContext());
-                ma.execute();
+                try {
+                    ModbusAccess ma = new ModbusAccess(this);
+                    ma.execute();
+                }
+                catch (Exception e) {
+                    Log.e(getClass().getSimpleName(), e.toString());
+                }
                 break;
         }
 
         return super.onOptionsItemSelected(item);
     }
 
-    class ModbusAccess extends AsyncTask<Void, Void, TristarData> {
-        private Context m_context;
-        private Exception exception;
+    static class ModbusAccess extends AsyncTask<Void, Void, TristarData> {
+
+        private WeakReference<MainActivity> appReference;
         private String m_host;
         private int m_port;
         private int m_slave_id;
 
         private TristarData m_tristarData = new TristarData();
 
-        public ModbusAccess(Context context) {
-            this.m_context = context.getApplicationContext();
+        private ModbusAccess(MainActivity context) {
+            appReference = new WeakReference<>(context);
         }
+        protected void onPreExecute () {
+            Context context = appReference.get();
+            SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(context);
 
-        private void ReadSettings() {
-            SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(m_context);
+            String defHost = context.getString(R.string.pref_default_ip_address);
+            String defPort = context.getString(R.string.pref_default_port);
+            String defSlaveId = context.getString(R.string.pref_default_slave_id);
 
-            String defHost = m_context.getString(R.string.pref_default_ip_address);
-            String defPort = m_context.getString(R.string.pref_default_port);
-            String defSlaveId = m_context.getString(R.string.pref_default_slave_id);
-
-            this.m_host = sharedPrefs.getString("ip_address", defHost);
+            m_host = sharedPrefs.getString("ip_address", defHost);
             String port = sharedPrefs.getString("ip_port", defPort);
-            this.m_port = Integer.parseInt(port, 10);
+            m_port = Integer.parseInt(port, 10);
             String slave_id = sharedPrefs.getString("slave_id", defSlaveId);
-            this.m_slave_id = Integer.parseInt(slave_id, 10);
-            this.m_tristarData.m_fahrenheit = !sharedPrefs.getBoolean("use_celsius", true);;
+            m_slave_id = Integer.parseInt(slave_id, 10);
+            m_tristarData.m_fahrenheit = !sharedPrefs.getBoolean("use_celsius", true);
         }
 
         protected TristarData doInBackground(Void... dummy) {
             try {
-                ReadSettings();
                 m_tristarData.m_berror = false;
 
-                ModbusTCP modbus = new ModbusTCP(this.m_host, this.m_port);
+                ModbusTCP modbus = new ModbusTCP(m_host, m_port, m_slave_id);
                 modbus.connect();
                 short[] tsdata = modbus.readInputRegisters(0, 80);
                 modbus.close();
@@ -166,10 +170,10 @@ public class MainActivity extends FragmentActivity {
 
         protected void onPostExecute(TristarData result) {
             if (!m_tristarData.m_berror) {
-                TristarMPPTFragment fragment = (TristarMPPTFragment) getSupportFragmentManager().findFragmentById(R.id.content_fragment);
+                TristarMPPTFragment fragment = (TristarMPPTFragment) appReference.get().getSupportFragmentManager().findFragmentById(R.id.content_fragment);
                 fragment.setTristarData(result);
             } else {
-                Toast.makeText(m_context, result.error, Toast.LENGTH_LONG).show();
+                Toast.makeText(appReference.get(), result.error, Toast.LENGTH_LONG).show();
             }
 
         }
