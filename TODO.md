@@ -1,6 +1,7 @@
 TODO
 ====
 
-- Historical data
+- Auto update
 - Modbus timeout in settings
-- Installation instructions to README.md
+- Historical data
+- Fix icon for low resolution
