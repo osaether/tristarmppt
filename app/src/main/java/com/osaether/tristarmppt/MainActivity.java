@@ -120,12 +120,16 @@ public class MainActivity extends FragmentActivity {
                 // m_tristarData.m_pmaxdaily = (float)temp/10.0f; // MSView uses this formula
                 m_tristarData.m_vmin = m_tristarData.m_v_pu * (float)tsdata[64] / 32768.0f;
                 m_tristarData.m_vmax = m_tristarData.m_v_pu * (float)tsdata[65] / 32768.0f;
-                m_tristarData.m_hours = (long)tsdata[42] << 16 | (long)tsdata[43];
+
+                long templ = (long)tsdata[43];
+                if (templ < 0)
+                    templ = 65536 + templ;
+                m_tristarData.m_hours = (long)tsdata[42] << 16 | templ;
 
                 // Counters:
                 long temph = (long)tsdata[52];
                 temph = temph & 0xffffL;
-                long templ = (long)tsdata[53];
+                templ = (long)tsdata[53];
                 templ = templ & 0xffffL;
                 templ = templ + temph * 65536;
                 m_tristarData.m_ahres = (float)templ * 0.1f;
